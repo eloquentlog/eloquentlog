@@ -1,0 +1,75 @@
+version: '3'
+services:
+  master:
+    hostname: master
+    image: sameersbn/postgresql:10-1
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role != manager
+    environment:
+      DEBUG: 'false'
+      DB_USER: eloquentlog
+      DB_PASS: eloquentlog
+      DB_NAME: eloquentlog_development
+      REPLICATION_MODE: master
+      REPLICATION_USER: stapel
+      REPLICATION_PASS: stapel
+      REPLICATION_SSLMODE:
+    volumes:
+      - eloquentlog-pg-data-master:/var/lib/postgres/data
+    depends_on:
+      - pg-data-master
+    networks:
+      - eloquentlog
+
+  slave:
+    hostname: slave
+    image: sameersbn/postgresql:10-1
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.role != manager
+    environment:
+      DEBUG: 'false'
+      REPLICATION_MODE: slave
+      REPLICATION_HOST: master
+      REPLICATION_PORT: 5432
+      REPLICATION_USER: eloquentlog_replicator
+      REPLICATION_PASS: eloquentlog_replicator
+    volumes:
+      - eloquentlog-pg-data-slave:/var/lib/postgres/data
+    depends_on:
+      - pg-data-slave
+    networks:
+      - eloquentlog
+
+  pg-data-master:
+    image: registry:5000/eloquentlog/postgres-data:latest
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == master
+    volumes:
+      - ./var/lib/postgres/data/master:/var/lib/postgres/data
+
+  pg-data-slave:
+    image: registry:5000/eloquentlog/postgres-data:latest
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == master
+    volumes:
+      - ./var/lib/postgres/data/slave:/var/lib/postgres/data
+
+volumes:
+  eloquentlog-pg-data-master:
+  eloquentlog-pg-data-slave:
+
+networks:
+  eloquentlog:
+    external: true
