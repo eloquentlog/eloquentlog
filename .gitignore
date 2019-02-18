@@ -1,2 +1,5 @@
 /var
 !/var/img/*
+
+/srv
+!/srv/.gitignore
