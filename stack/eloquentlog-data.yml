@@ -14,9 +14,9 @@ services:
       DB_PASS: eloquentlog
       DB_NAME: eloquentlog_development
       REPLICATION_MODE: master
-      REPLICATION_USER: stapel
-      REPLICATION_PASS: stapel
       REPLICATION_SSLMODE:
+      REPLICATION_USER: eloquentlog_replicator
+      REPLICATION_PASS: eloquentlog_replicator
     volumes:
       - eloquentlog-pg-data-master:/var/lib/postgres/data
     depends_on:
@@ -36,7 +36,6 @@ services:
       DEBUG: 'false'
       REPLICATION_MODE: slave
       REPLICATION_HOST: master
-      REPLICATION_PORT: 5432
       REPLICATION_USER: eloquentlog_replicator
       REPLICATION_PASS: eloquentlog_replicator
     volumes:
