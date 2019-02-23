@@ -1,3 +1,5 @@
+registry-data/*
+
 /var
 !/var/img/*
 
