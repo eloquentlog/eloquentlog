@@ -9,7 +9,9 @@
 ```zsh
 % make up
 
+# create/delete nodes
 % make join
+% make leave
 ```
 
 #### Containers
@@ -20,9 +22,11 @@ This is optional.
 
 ```zsh
 # visualizer
-% docker container exec -it manager docker stack deploy \
+% docker container exec -it eloquentlog-manager docker stack deploy \
   -c ./stack/visualizer.yml visualizer
 ```
+
+Then, the visualizer will be up at `localhost:9000`.
 
 ##### PostgreSQL
 
@@ -36,21 +40,26 @@ This is optional.
 ```
 
 ```zsh
-% docker container exec -it manager docker stack deploy \
+% docker container exec -it eloquentlog-manager docker stack deploy \
   -c ./stack/eloquentlog-data.yml eloquentlog-data
+Creating network eloquentlog-data_default
+Creating service eloquentlog-data_pg-data-slave
+Creating service eloquentlog-data_master
+Creating service eloquentlog-data_slave
+Creating service eloquentlog-data_pg-data-master
 ```
 
 ###### Display containers
 
 ```zsh
 # display containers `<node> <name>.<id>` for master
-% docker container exec -it manager docker service ps \
-  eloquentlog-data --no-trunc --filter "desired-state=running" \
+% docker container exec -it eloquentlog-manager docker service ps \
+  eloquentlog-data_master --no-trunc --filter "desired-state=running" \
   --format "{{.Node}} {{.Name}}.{{.ID}}"
 
 # display containers `<node> <name>.<id>` for slave
-% docker container exec -it manager docker service ps \
-  eloquentlog-data --no-trunc --filter "desired-state=running" \
+% docker container exec -it eloquentlog-manager docker service ps \
+  eloquentlog-data_slave --no-trunc --filter "desired-state=running" \
   --format "{{.Node}} {{.Name}}.{{.ID}}"
 ```
 
