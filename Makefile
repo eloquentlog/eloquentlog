@@ -72,3 +72,34 @@ stop: rc
 restart: rc
 	@docker-compose -f docker-compose.yml -p $(application) restart
 .PHONY: restart
+
+# swarm -- {{{
+node\:join:
+	@docker container exec -it $(application)-manager docker swarm init \
+	  >/dev/null
+	@docker container exec -it $(application)-manager docker network create \
+	--driver=overlay --attachable $(application) >/dev/null
+	@token="$$( \
+	  docker container exec -it $(application)-manager \
+	  docker swarm join-token worker | grep token | awk '{print $$5}' \
+	)" && \
+	for i in `seq 1 3`; do \
+	  docker container exec -it "$(application)-worker-0$${i}" \
+	    docker swarm join --token "$${token}" $(application)-manager:2377; \
+	done
+.PHONY: node\:join
+
+join: node\:join
+.PHONY: join
+
+node\:leave:
+	@for i in `seq 1 3`; do \
+	  docker container exec -it "$(application)-worker-0$${i}" \
+	    docker swarm leave; \
+	done
+	@docker container exec -it $(application)-manager docker swarm leave --force
+.PHONY: node\:leave
+
+leave: node\:leave
+.PHONY: leave
+# }}}

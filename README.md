@@ -9,15 +9,7 @@
 ```zsh
 % make up
 
-% docker container exec -it manager docker swarm init
-% docker container exec -it worker-01 docker swarm join \
-  --token <token> manager:2377
-% docker container exec -it worker-02 docker swarm join \
-  --token <token> manager:2377
-% docker container exec -it worker-03 docker swarm join \
-  --token <token> manager:2377
-% docker container exec -it manager docker network create \
-  --driver=overlay --attachable eloquentlog
+% make join
 ```
 
 #### Containers

@@ -1,2 +1,5 @@
+Sat 23 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add make {join|leave} for nodes on docker swarm
+
 Sun 17 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Initial commit ;)
