@@ -22,8 +22,7 @@ This is optional.
 
 ```zsh
 # visualizer
-% docker container exec -it eloquentlog-manager docker stack deploy \
-  -c ./stack/visualizer.yml visualizer
+% make deploy:visualizer
 ```
 
 Then, the visualizer will be up at `localhost:9000`.

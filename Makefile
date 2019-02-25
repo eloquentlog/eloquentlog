@@ -119,4 +119,11 @@ deploy\:postgresql:
 	@docker container exec -it $(application)-manager docker stack deploy \
 	  -c ./stack/$(application)-postgresql.yml $(application)-postgresql
 .PHONY: deploy\:postgresql
+
+deploy\:visualizer:
+	@echo "* deploying $(application)-visualizer service containers..."
+	@echo
+	@docker container exec -it $(application)-manager docker stack deploy \
+	  -c ./stack/$(application)-visualizer.yml $(application)-visualizer
+.PHONY: deploy\:visualizer
 # }}}
