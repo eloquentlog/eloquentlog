@@ -1,4 +1,5 @@
 Mon 25 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Update docker-compose format (3.7)
 	* Make eloquentlog-data as global
 	* Add postgresql service using a data volume container
 
