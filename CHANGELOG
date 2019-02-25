@@ -1,3 +1,6 @@
+Mon 25 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add postgresql service using a data volume container
+
 Sat 23 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add make {join|leave} for nodes on docker swarm
 
