@@ -44,23 +44,21 @@ Creating service eloquentlog-postgresql_slave
 ###### Display containers
 
 ```zsh
-# display containers `<node> <name>.<id>` for master
-% docker container exec -it eloquentlog-manager docker service ps \
-  eloquentlog-data_master --no-trunc --filter "desired-state=running" \
-  --format "{{.Node}} {{.Name}}.{{.ID}}"
-
-# display containers `<node> <name>.<id>` for slave
-% docker container exec -it eloquentlog-manager docker service ps \
-  eloquentlog-data_slave --no-trunc --filter "desired-state=running" \
-  --format "{{.Node}} {{.Name}}.{{.ID}}"
+# display commands to each node
+% make info:node
 ```
 
 ###### Create Schema
 
 ```zsh
-# master
-% docker container exec -it  docker exec -it <node> \
-  docker container exec -it <node> docker exec -it <name>.<id> psql -U USER DATABASE
+# master (see `make info:node`)
+% docker container exec -it <node> \
+  docker exec -it eloquentlog-postgresql_master.1.<id> \
+  psql -U USER DATABASE -f /var/lib/postgresql/schema/001.sql
+CREATE TYPE
+CREATE TYPE
+CREATE SEQUENCE
+...
 ```
 
 
