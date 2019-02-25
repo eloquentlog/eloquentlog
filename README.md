@@ -31,22 +31,15 @@ Then, the visualizer will be up at `localhost:9000`.
 ##### PostgreSQL
 
 ```zsh
-# postgres
-% docker image build -f srv/eloquentlog-data/Dockerfile \
-  -t eloquentlog/eloquentlog-data:latest srv/eloquentlog-data
-% docker image tag eloquentlog/eloquentlog-data:latest \
-  localhost:5000/eloquentlog/eloquentlog-data:latest
-% docker image push localhost:5000/eloquentlog/eloquentlog-data:latest
+# build a data container and push it on local (dind) registry
+% make data
 ```
 
 ```zsh
-% docker container exec -it eloquentlog-manager docker stack deploy \
-  -c ./stack/eloquentlog-data.yml eloquentlog-data
-Creating network eloquentlog-data_default
-Creating service eloquentlog-data_pg-data-slave
-Creating service eloquentlog-data_master
-Creating service eloquentlog-data_slave
-Creating service eloquentlog-data_pg-data-master
+% make deploy:postgresql
+Creating service eloquentlog-postgresql_data
+Creating service eloquentlog-postgresql_master
+Creating service eloquentlog-postgresql_slave
 ```
 
 ###### Display containers

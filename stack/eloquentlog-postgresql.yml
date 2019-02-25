@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   master:
     hostname: master
@@ -17,10 +17,14 @@ services:
       REPLICATION_SSLMODE:
       REPLICATION_USER: eloquentlog_replicator
       REPLICATION_PASS: eloquentlog_replicator
-    volumes:
-      - eloquentlog-pg-data-master:/var/lib/postgres/data
     depends_on:
-      - pg-data-master
+      - data
+    volumes:
+      - type: volume
+        source: eloquentlog-data
+        target: /var/lib/postgresql/
+        volume:
+          nocopy: false
     networks:
       - eloquentlog
 
@@ -38,36 +42,30 @@ services:
       REPLICATION_HOST: master
       REPLICATION_USER: eloquentlog_replicator
       REPLICATION_PASS: eloquentlog_replicator
-    volumes:
-      - eloquentlog-pg-data-slave:/var/lib/postgres/data
     depends_on:
-      - pg-data-slave
+      - master
     networks:
       - eloquentlog
 
-  pg-data-master:
-    image: registry:5000/eloquentlog/postgres-data:latest
+  # copy files into the data vomule
+  data:
+    image: registry:5000/eloquentlog/eloquentlog-data:latest
     deploy:
       replicas: 1
       placement:
         constraints:
-          - node.role == master
+          - node.role != manager
     volumes:
-      - ./var/lib/postgres/data/master:/var/lib/postgres/data
-
-  pg-data-slave:
-    image: registry:5000/eloquentlog/postgres-data:latest
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == master
-    volumes:
-      - ./var/lib/postgres/data/slave:/var/lib/postgres/data
+      - type: volume
+        source: eloquentlog-data
+        target: /var/lib/postgresql/
+        volume:
+          nocopy: false
+    networks:
+      - eloquentlog
 
 volumes:
-  eloquentlog-pg-data-master:
-  eloquentlog-pg-data-slave:
+  eloquentlog-data:
 
 networks:
   eloquentlog:

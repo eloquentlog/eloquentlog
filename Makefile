@@ -102,4 +102,21 @@ node\:leave:
 
 leave: node\:leave
 .PHONY: leave
+
+data:
+	@echo "* building $(application)-data a container..."
+	# external (data)
+	@docker image build -f srv/$(application)-data/Dockerfile \
+	  -t $(application)/$(application)-data:latest srv/$(application)-data
+	@docker image tag $(application)/$(application)-data:latest \
+	  localhost:5000/$(application)/$(application)-data:latest
+	@docker image push localhost:5000/$(application)/$(application)-data:latest
+.PHONY: data
+
+deploy\:postgresql:
+	@echo "* deploying $(application)-postgresql service containers..."
+	@echo
+	@docker container exec -it $(application)-manager docker stack deploy \
+	  -c ./stack/$(application)-postgresql.yml $(application)-postgresql
+.PHONY: deploy\:postgresql
 # }}}
