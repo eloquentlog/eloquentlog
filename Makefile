@@ -60,6 +60,13 @@ down: rc
 clean: rc
 	@docker-compose -f docker-compose.yml -p $(application) down \
 	  --rmi local --volumes
+	@if docker images | \
+	  grep localhost:5000/$(application)/$(application)-data; then \
+	  docker rmi localhost:5000/$(application)/$(application)-data:latest; \
+	fi
+	@if docker images | grep $(application)-data; then \
+	  docker rmi $(application)/$(application)-data:latest; \
+	fi
 .PHONY: clean
 
 start: up
@@ -113,6 +120,19 @@ data:
 	@docker image push localhost:5000/$(application)/$(application)-data:latest
 .PHONY: data
 
+data\:export:
+	@echo "TODO"
+.PHONY: data\:export
+
+data\:import:
+	@echo "TODO"
+.PHONY: data\:import
+
+data\:update:
+	@docker container exec -it $(application)-manager docker service update \
+	  $(application)-postgresql_data
+.PHONY: data\:update
+
 deploy\:postgresql:
 	@echo "* deploying $(application)-postgresql service containers..."
 	@echo
@@ -126,4 +146,36 @@ deploy\:visualizer:
 	@docker container exec -it $(application)-manager docker stack deploy \
 	  -c ./stack/$(application)-visualizer.yml $(application)-visualizer
 .PHONY: deploy\:visualizer
+
+info\:node:
+	@echo "# $(shell date --rfc-3339=ns)"
+	@echo "# network: ${application}"
+	@echo ""
+	@echo "[master]"
+	@echo "docker container exec -it $(shell docker container exec -it \
+	  $(application)-manager docker service ps ${application}-postgresql_master \
+	  --no-trunc \
+	  --filter 'desired-state=running' \
+	  --format '{{.Node}} docker exec -it {{.Name}}.{{.ID}}')"
+	@echo ""
+	@echo "[data]"
+	@echo "$$(docker container exec -it $(application)-manager \
+	  docker service ps $(application)-postgresql_data \
+	  --no-trunc \
+	  --filter 'desired-state=running' \
+	  --format '{{.Node}} docker exec -it {{.Name}}.{{.ID}}')" | \
+	  while read -r line; do \
+	    echo "docker container exec -it $${line}"; \
+	  done
+	@echo ""
+	@echo "[slave]"
+	@echo "$$(docker container exec -it $(application)-manager \
+	  docker service ps $(application)-postgresql_slave \
+	  --no-trunc \
+	  --filter 'desired-state=running' \
+	  --format '{{.Node}} docker exec -it {{.Name}}.{{.ID}}')" | \
+	  while read line; do \
+	    echo "docker container exec -it $${line}"; \
+	  done
+.PHONY: info\:node
 # }}}

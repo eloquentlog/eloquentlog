@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.7'
 services:
   master:
     hostname: master
@@ -17,14 +17,10 @@ services:
       REPLICATION_SSLMODE:
       REPLICATION_USER: eloquentlog_replicator
       REPLICATION_PASS: eloquentlog_replicator
-    depends_on:
-      - data
     volumes:
       - type: volume
         source: eloquentlog-data
         target: /var/lib/postgresql/
-        volume:
-          nocopy: false
     networks:
       - eloquentlog
 
@@ -42,19 +38,19 @@ services:
       REPLICATION_HOST: master
       REPLICATION_USER: eloquentlog_replicator
       REPLICATION_PASS: eloquentlog_replicator
-    depends_on:
-      - master
     networks:
       - eloquentlog
 
-  # copy files into the data vomule
+  # copy files into a data vomule created on each node
   data:
     image: registry:5000/eloquentlog/eloquentlog-data:latest
     deploy:
-      replicas: 1
+      mode: global
       placement:
         constraints:
           - node.role != manager
+    command: |
+      sh -c 'while true; do sleep 1000; done'
     volumes:
       - type: volume
         source: eloquentlog-data
@@ -66,6 +62,7 @@ services:
 
 volumes:
   eloquentlog-data:
+    external: true
 
 networks:
   eloquentlog:
