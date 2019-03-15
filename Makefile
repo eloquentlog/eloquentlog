@@ -112,7 +112,10 @@ leave: node\:leave
 
 data:
 	@echo "* building $(application)-data a container..."
-	# external (data)
+	# move sql files (for migrations)
+	@rm -fr srv/$(application)-data/schema/*
+	@cp -R srv/$(application)-backend-api/migrations/* srv/$(application)-data/schema/
+	# build external image (data)
 	@docker image build -f srv/$(application)-data/Dockerfile \
 	  -t $(application)/$(application)-data:latest srv/$(application)-data
 	@docker image tag $(application)/$(application)-data:latest \
