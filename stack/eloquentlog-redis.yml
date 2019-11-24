@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  master:
+    hostname: master
+    image: redis:5
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role != manager
+    networks:
+      - eloquentlog
+
+  slave:
+    hostname: slave
+    image: redis:5
+    command: --slaveof master 6379
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role != manager
+    networks:
+      - eloquentlog
+
+networks:
+  eloquentlog:
+    external: true

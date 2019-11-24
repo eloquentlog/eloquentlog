@@ -10,7 +10,7 @@
 
 ### Setup
 
-#### Nodes & Networks
+#### Networks & Nodes
 
 ```zsh
 % make up
@@ -18,13 +18,16 @@
 # create/delete nodes
 % make join
 % make leave
+
+... deploy containers
+
+# display commands to each node
+% make info:node
 ```
 
 #### Containers
 
-##### Visualizer
-
-This is optional.
+##### 0. Visualizer (optional)
 
 ```zsh
 # visualizer
@@ -33,7 +36,7 @@ This is optional.
 
 Then, the visualizer will be up at `localhost:9000`.
 
-##### PostgreSQL
+##### 1. PostgreSQL
 
 ```zsh
 # build a data container and push it on local (dind) registry
@@ -47,30 +50,44 @@ Creating service eloquentlog-postgresql_master
 Creating service eloquentlog-postgresql_slave
 ```
 
-###### Display containers
-
-```zsh
-# display commands to each node
-% make info:node
-```
-
 ###### Create Schema
+
+TODO migration
 
 ```zsh
 # master (see `make info:node`)
 % docker container exec -it <node> \
   docker exec -it eloquentlog-postgresql_master.1.<id> \
-  psql -U USER DATABASE -f /var/lib/postgresql/schema/001.sql
+  psql -U <USER> <DATABASE> \
+  -f /var/lib/postgresql/schema/<MIGRATION-NAME>/<NAME>.sql
 CREATE TYPE
 CREATE TYPE
 CREATE SEQUENCE
 ...
 ```
 
+#### 2. Redis
+
+```zsh
+% make deploy:redis
+Creating service eloquentlog-redis_master
+Creating service eloquentlog-redis_slave
+```
+
+#### 3. Console API
+
+TODO
+
+#### 4. Web Console
+
+TODO
+
+#### 5. Ingest Proc
+
+TODO
+
 
 ## License
-
-See LICENSE.
 
 ```text
 ┏━╸╻  ┏━┓┏━┓╻ ╻┏━╸┏┓╻╺┳╸╻  ┏━┓┏━╸
