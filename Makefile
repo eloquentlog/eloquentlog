@@ -5,10 +5,10 @@ repository_host = gitlab.com
 repository_user = $(application)
 
 repositories = \
-	$(application)-backend-api \
+	$(application)-console-api \
 	$(application)-cli \
 	$(application)-data \
-	$(application)-web-frontend
+	$(application)-web-console
 
 srv ?= $(shell pwd)/srv
 
@@ -114,7 +114,7 @@ data:
 	@echo "* building $(application)-data a container..."
 	# move sql files (for migrations)
 	@rm -fr srv/$(application)-data/schema/*
-	@cp -R srv/$(application)-backend-api/migrations/* srv/$(application)-data/schema/
+	@cp -R srv/$(application)-console-api/migrations/* srv/$(application)-data/schema/
 	# build external image (data)
 	@docker image build -f srv/$(application)-data/Dockerfile \
 	  -t $(application)/$(application)-data:latest srv/$(application)-data
