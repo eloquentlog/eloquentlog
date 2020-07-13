@@ -3,12 +3,6 @@
 [![status](https://img.shields.io/badge/Status-Alpha-yellow.svg)](https://gitlab.com/eloquentlog/eloquentlog/tree/master)
 [![license](https://img.shields.io/badge/license-AGPL--3.0--or--later-orange.svg)](https://gitlab.com/eloquentlog)
 
-```txt
-┏━╸╻  ┏━┓┏━┓╻ ╻┏━╸┏┓╻╺┳╸╻  ┏━┓┏━╸
-┣╸ ┃  ┃ ┃┃┓┃┃ ┃┣╸ ┃┗┫ ┃ ┃  ┃ ┃┃╺┓
-┗━╸┗━╸┗━┛┗┻┛┗━┛┗━╸╹ ╹ ╹ ┗━╸┗━┛┗━┛
-```
-
 A log sharing service to get profound impressions by each other.
 
 https://eloquentlog.com/
