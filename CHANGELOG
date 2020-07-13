@@ -1,3 +1,6 @@
+Tue 14 Jul 2020 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add a logo into README.md
+
 Mon 25 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Update docker-compose format (3.7)
 	* Make eloquentlog-data as global
