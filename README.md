@@ -97,7 +97,7 @@ TODO
 ┣╸ ┃  ┃ ┃┃┓┃┃ ┃┣╸ ┃┗┫ ┃ ┃  ┃ ┃┃╺┓
 ┗━╸┗━╸┗━┛┗┻┛┗━┛┗━╸╹ ╹ ╹ ┗━╸┗━┛┗━┛
 
-Copyright (C) 2019 Lupine Software LLC
+Copyright (C) 2017-2020 Lupine Software LLC
 ```
 
 `AGPL-3.0-or-later`
