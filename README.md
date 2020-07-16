@@ -1,7 +1,8 @@
 <h2 style="font-family:monospace,courier;font-size:3em"><img align="left" src="var/img/wolf-paw.png?raw=true" height="36" width="36" alt="Eloquentlog">Eloquentlog</h2>
 
 [![status](https://img.shields.io/badge/Status-Alpha-yellow.svg)](https://gitlab.com/eloquentlog/eloquentlog/tree/master)
-[![license](https://img.shields.io/badge/license-AGPL--3.0--or--later-orange.svg)](https://gitlab.com/eloquentlog)
+[![license](https://img.shields.io/badge/License-AGPL--3.0--or--later-orange.svg)](https://gitlab.com/eloquentlog)
+[![project chat](https://img.shields.io/badge/Chat-Join_Zulip-4ebfac.svg)](https://eloquentlog.zulipchat.com/)
 
 A log sharing service to get profound impressions by each other.
 
