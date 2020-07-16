@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/badge/License-AGPL--3.0--or--later-orange.svg)](https://gitlab.com/eloquentlog)
 [![project chat](https://img.shields.io/badge/Chat-Join_Zulip-4ebfac.svg)](https://eloquentlog.zulipchat.com/)
 
-A log sharing service to get profound impressions by each other.
+An activity log sharing service to get profound motivation from each other.
 
 https://eloquentlog.com/
 
