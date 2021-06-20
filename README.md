@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/badge/License-AGPL--3.0--or--later-orange.svg)](https://gitlab.com/eloquentlog)
 [![project chat](https://img.shields.io/badge/Chat-Join_Zulip-4ebfac.svg)](https://eloquentlog.zulipchat.com/)
 
-An activity log sharing service to get profound motivation from each other.
+A log processing software.
 
 https://eloquentlog.com/
 
@@ -81,11 +81,11 @@ Creating service eloquentlog-redis_slave
 
 TODO
 
-#### 4. Web Console
+#### 4. Web
 
 TODO
 
-#### 5. Ingest Proc
+#### 5. Ingest API
 
 TODO
 
@@ -97,7 +97,7 @@ TODO
 ┣╸ ┃  ┃ ┃┃┓┃┃ ┃┣╸ ┃┗┫ ┃ ┃  ┃ ┃┃╺┓
 ┗━╸┗━╸┗━┛┗┻┛┗━┛┗━╸╹ ╹ ╹ ┗━╸┗━┛┗━┛
 
-Copyright (C) 2017-2020 Lupine Software LLC
+Copyright (C) 2017-2021 Lupine Software LLC
 ```
 
 `AGPL-3.0-or-later`
