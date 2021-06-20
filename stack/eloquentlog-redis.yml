@@ -16,7 +16,7 @@ services:
     image: redis:5
     command: --slaveof master 6379
     deploy:
-      replicas: 1
+      replicas: 2
       placement:
         constraints:
           - node.role != manager
