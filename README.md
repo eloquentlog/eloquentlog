@@ -13,22 +13,35 @@ https://eloquentlog.com/
 
 ### Setup
 
-#### Networks & Nodes
+#### Overview
+
+```zsh
+% make up
+% make join
+
+# deploy containers (WIP)
+% make deploy:xxx
+% make deploy:xxx
+...
+```
+
+#### Prepare networks & nodes
 
 ```zsh
 % make up
 
-# create/delete nodes
+# to create/delete nodes
 % make join
 % make leave
-
-... deploy containers
-
-# display commands to each node
-% make info:node
 ```
 
-#### Containers
+After containers deployment (in next steps), check each nodes with:
+
+```zsh
+% make info
+```
+
+#### Deploy containers
 
 ##### 0. Visualizer (optional)
 
@@ -43,7 +56,7 @@ Then, the visualizer will be up at `localhost:9000`.
 
 ```zsh
 # build a data container and push it on local (dind) registry
-% make data
+% make deploy:data
 ```
 
 ```zsh
@@ -53,12 +66,10 @@ Creating service eloquentlog-postgresql_master
 Creating service eloquentlog-postgresql_slave
 ```
 
-###### Create Schema
-
-TODO migration
+TODO: schema migration
 
 ```zsh
-# master (see `make info:node`)
+# master (see `make node:info`)
 % docker container exec -it <node> \
   docker exec -it eloquentlog-postgresql_master.1.<id> \
   psql -U <USER> <DATABASE> \
