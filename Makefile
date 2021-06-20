@@ -8,7 +8,7 @@ repositories = \
 	$(application)-console-api \
 	$(application)-cli \
 	$(application)-data \
-	$(application)-web-console
+	$(application)-web-
 
 srv ?= $(shell pwd)/srv
 
@@ -110,55 +110,7 @@ node\:leave:
 leave: node\:leave
 .PHONY: leave
 
-data:
-	@echo "* building $(application)-data a container..."
-	# move sql files (for migrations)
-	@rm -fr srv/$(application)-data/schema/*
-	@cp -R srv/$(application)-console-api/migration/* \
-		srv/$(application)-data/schema/
-	# build external image (data)
-	@docker image build -f srv/$(application)-data/Dockerfile \
-		-t $(application)/$(application)-data:latest srv/$(application)-data
-	@docker image tag $(application)/$(application)-data:latest \
-		localhost:5000/$(application)/$(application)-data:latest
-	@docker image push localhost:5000/$(application)/$(application)-data:latest
-.PHONY: data
-
-data\:export:
-	@echo "TODO"
-.PHONY: data\:export
-
-data\:import:
-	@echo "TODO"
-.PHONY: data\:import
-
-data\:update:
-	@docker container exec -it $(application)-manager docker service update \
-		$(application)-postgresql_data
-.PHONY: data\:update
-
-deploy\:postgresql:
-	@echo "* deploying $(application)-postgresql service containers..."
-	@echo
-	@docker container exec -it $(application)-manager docker stack deploy \
-		-c ./stack/$(application)-postgresql.yml $(application)-postgresql
-.PHONY: deploy\:postgresql
-
-deploy\:redis:
-	@echo "* deploying $(application)-redis service containers..."
-	@echo
-	@docker container exec -it $(application)-manager docker stack deploy \
-		-c ./stack/$(application)-redis.yml $(application)-redis
-.PHONY: deploy\:redis
-
-deploy\:visualizer:
-	@echo "* deploying $(application)-visualizer service containers..."
-	@echo
-	@docker container exec -it $(application)-manager docker stack deploy \
-		-c ./stack/$(application)-visualizer.yml $(application)-visualizer
-.PHONY: deploy\:visualizer
-
-info\:node:
+node\:info:
 	@echo "# $(shell date --rfc-3339=ns)"
 	@echo "# network: ${application}"
 	@echo ""
@@ -203,5 +155,56 @@ info\:node:
 		--filter 'desired-state=running' \
 		--format '{{.Node}} docker exec -it {{.Name}}.{{.ID}}')"
 	@echo ""
-.PHONY: info\:node
+.PHONY: node\:info
+
+info: node\:info
+.PHONY: info
+
+deploy\:data:
+	@echo "* building $(application)-data a container..."
+	# move sql files (for migrations)
+	@rm -fr srv/$(application)-data/schema/*
+	@cp -R srv/$(application)-console-api/migration/* \
+		srv/$(application)-data/schema/
+	# build external image (data)
+	@docker image build -f srv/$(application)-data/Dockerfile \
+		-t $(application)/$(application)-data:latest srv/$(application)-data
+	@docker image tag $(application)/$(application)-data:latest \
+		localhost:5000/$(application)/$(application)-data:latest
+	@docker image push localhost:5000/$(application)/$(application)-data:latest
+.PHONY: deploy\:data
+
+deploy\:data\:export:
+	@echo "TODO"
+.PHONY: deploy\:data\:export
+
+deploy\:data\:import:
+	@echo "TODO"
+.PHONY: deploy\:data\:import
+
+deploy\:data\:update:
+	@docker container exec -it $(application)-manager docker service update \
+		$(application)-postgresql_data
+.PHONY: deploy\:data\:update
+
+deploy\:postgresql:
+	@echo "* deploying $(application)-postgresql service containers..."
+	@echo
+	@docker container exec -it $(application)-manager docker stack deploy \
+		-c ./stack/$(application)-postgresql.yml $(application)-postgresql
+.PHONY: deploy\:postgresql
+
+deploy\:redis:
+	@echo "* deploying $(application)-redis service containers..."
+	@echo
+	@docker container exec -it $(application)-manager docker stack deploy \
+		-c ./stack/$(application)-redis.yml $(application)-redis
+.PHONY: deploy\:redis
+
+deploy\:visualizer:
+	@echo "* deploying $(application)-visualizer service containers..."
+	@echo
+	@docker container exec -it $(application)-manager docker stack deploy \
+		-c ./stack/$(application)-visualizer.yml $(application)-visualizer
+.PHONY: deploy\:visualizer
 # }}}
